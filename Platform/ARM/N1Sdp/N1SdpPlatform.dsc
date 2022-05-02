@@ -4,7 +4,7 @@
 # This provides platform specific component descriptions and libraries that
 # conform to EFI/Framework standards.
 #
-# Copyright (c) 2018 - 2021, ARM Limited. All rights reserved.<BR>
+# Copyright (c) 2018 - 2023, ARM Limited. All rights reserved.<BR>
 #
 # SPDX-License-Identifier: BSD-2-Clause-Patent
 #
@@ -43,6 +43,9 @@
 
   # file explorer library support
   FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
+
+  # NOR flash support
+  NorFlashInfoLib|EmbeddedPkg/Library/NorFlashInfoLib/NorFlashInfoLib.inf
 
 [LibraryClasses.common.SEC]
   HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
@@ -161,11 +164,9 @@
   # ACPI Table Version
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiExposedTableVersions|0x20
 
-  # Runtime Variable storage
-  gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvStoreReserved|0
-  gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x2000
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxAuthVariableSize|0x2800
+  # NOR flash support
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase|0x18F00000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize|0x00020000
 
 ################################################################################
 #
@@ -197,6 +198,12 @@
       gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8000000F
   }
 
+  # NOR flash support
+  Platform/ARM/N1Sdp/Drivers/CadenceQspiDxe/CadenceQspiDxe.inf {
+      <LibraryClasses>
+      NorFlashPlatformLib|Silicon/ARM/NeoverseN1Soc/Library/NorFlashLib/NorFlashLib.inf
+  }
+
   # Architectural Protocols
   ArmPkg/Drivers/CpuDxe/CpuDxe.inf
   ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
@@ -217,6 +224,7 @@
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf {
     <LibraryClasses>
       NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
+      NULL|EmbeddedPkg/Library/NvVarStoreFormattedLib/NvVarStoreFormattedLib.inf
       BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
   }
 
