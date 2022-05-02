@@ -1,6 +1,6 @@
 /** @file
 *
-* Copyright (c) 2018 - 2020, ARM Limited. All rights reserved.
+* Copyright (c) 2018 - 2023, ARM Limited. All rights reserved.
 *
 * SPDX-License-Identifier: BSD-2-Clause-Patent
 *
@@ -40,6 +40,10 @@
 // AXI Expansion peripherals
 #define NEOVERSEN1SOC_EXP_PERIPH_BASE0               0x1C000000
 #define NEOVERSEN1SOC_EXP_PERIPH_BASE0_SZ            0x1300000
+
+// SCP QSPI flash device
+#define NEOVERSEN1SOC_SCP_QSPI_AHB_BASE              0x18000000
+#define NEOVERSEN1SOC_SCP_QSPI_AHB_SZ                0x2000000
 
 // Base address to a structure of type NEOVERSEN1SOC_PLAT_INFO which is
 // pre-populated by a earlier boot stage
