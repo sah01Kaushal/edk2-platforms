@@ -47,6 +47,7 @@
 // SCP QSPI flash device
 #define NEOVERSEN1SOC_SCP_QSPI_AHB_BASE              0x18000000
 #define NEOVERSEN1SOC_SCP_QSPI_AHB_SZ                0x2000000
+#define NEOVERSEN1SOC_FIRMWARE_IAMGES_SZ             0x800000
 
 /*
  * Platform information structure stored in Non-secure SRAM. Platform
