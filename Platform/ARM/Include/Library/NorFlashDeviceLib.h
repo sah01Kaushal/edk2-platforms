@@ -29,6 +29,7 @@ struct _NOR_FLASH_INSTANCE {
   UINT32                                 Signature;
   EFI_HANDLE                             Handle;
 
+  UINTN                                  HostRegisterBaseAddress;
   UINTN                                  DeviceBaseAddress;
   UINTN                                  RegionBaseAddress;
   UINTN                                  Size;
