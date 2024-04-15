@@ -9,6 +9,7 @@
 #include <Library/UefiLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/MemoryAllocationLib.h>
+#include <Library/NorFlashInfoLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/PcdLib.h>
 #include <Library/HobLib.h>
@@ -112,6 +113,8 @@ NorFlashCreateInstance (
 {
   EFI_STATUS          Status;
   NOR_FLASH_INSTANCE  *Instance;
+  NOR_FLASH_INFO      *FlashInfo;
+  UINT8               JedecId[6];
 
   ASSERT (NorFlashInstance != NULL);
 
@@ -136,6 +139,22 @@ NorFlashCreateInstance (
   Instance->ShadowBuffer = AllocateRuntimePool (BlockSize);
   if (Instance->ShadowBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
+  }
+
+  Status = NorFlashReadID (Instance, JedecId);
+  if (EFI_ERROR (Status) && (Status != EFI_UNSUPPORTED)) {
+    FreePool (Instance);
+    return Status;
+  }
+
+  if (Status == EFI_SUCCESS) {
+    Status = NorFlashGetInfo (JedecId, &FlashInfo, TRUE);
+    if (EFI_ERROR (Status)) {
+      FreePool (Instance);
+      return Status;
+    }
+
+    NorFlashPrintInfo (FlashInfo);
   }
 
   if (SupportFvb) {

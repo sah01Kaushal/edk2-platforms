@@ -154,4 +154,10 @@ NorFlashUnlock (
   IN EFI_TPL  OriginalTPL
   );
 
+EFI_STATUS
+NorFlashReadID (
+  IN  NOR_FLASH_INSTANCE  *Instance,
+  OUT UINT8               *JedecId  // Maximum length of JedecId can be upto 6 bytes.
+  );
+
 #endif /* NOR_FLASH_DEVICE_LIB_H_ */
